@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "TVING KBO PLUS",
+  "version": "0.0.1",
+  "description": "TVING KBO PLUS",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.tving.com/contents/sports/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "tving.png",
+    "48": "tving.png",
+    "128": "tving.png"
+  }
+}

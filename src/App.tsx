@@ -6,6 +6,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [settings, setSettings] = useState<Settings>({
     hideLikeButton: false,
+    hideHeader: false,
   });
 
   useEffect(() => {
@@ -36,6 +37,13 @@ function App() {
         <S.ToggleButton
           isActive={settings.hideLikeButton}
           onClick={() => handleToggle("hideLikeButton")}
+        />
+      </S.SettingRow>
+      <S.SettingRow>
+        <S.Label>헤더 숨기기</S.Label>
+        <S.ToggleButton
+          isActive={settings.hideHeader}
+          onClick={() => handleToggle("hideHeader")}
         />
       </S.SettingRow>
     </S.Container>

@@ -6,7 +6,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [settings, setSettings] = useState<Settings>({
     hideLikeButton: false,
-    hideHeader: false,
+    autoMuteOnAd: false,
   });
 
   useEffect(() => {
@@ -40,10 +40,10 @@ function App() {
         />
       </S.SettingRow>
       <S.SettingRow>
-        <S.Label>헤더 숨기기</S.Label>
+        <S.Label>광고시 자동 음소거</S.Label>
         <S.ToggleButton
-          isActive={settings.hideHeader}
-          onClick={() => handleToggle("hideHeader")}
+          isActive={settings.autoMuteOnAd}
+          onClick={() => handleToggle("autoMuteOnAd")}
         />
       </S.SettingRow>
     </S.Container>

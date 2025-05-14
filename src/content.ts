@@ -3,11 +3,14 @@ import { Settings } from "./types";
 class TvingCustomizer {
   private settings: Settings = {
     hideLikeButton: false,
-    hideHeader: false,
+    autoMuteOnAd: false,
   };
 
-  private readonly hideElements = {
+  private readonly selectors = {
     LIKE_BUTTON: ".group\\/heart",
+    AD_BUTTON: ".PcAdvertisementLinkButton_advertisementLinkButton__tyCiu",
+    MUTE_BUTTON: 'button[aria-label="음소거"]',
+    UNMUTE_BUTTON: 'button[aria-label="음소거 해제"]',
   };
 
   private debounceTimer: number | null = null;
@@ -37,7 +40,7 @@ class TvingCustomizer {
     if (this.isInitialized) return;
 
     const checkElements = () => {
-      const elements = Object.values(this.hideElements).map((selector) =>
+      const elements = Object.values(this.selectors).map((selector) =>
         document.querySelector(selector)
       );
 
@@ -60,7 +63,7 @@ class TvingCustomizer {
 
     this.debounceTimer = window.setTimeout(() => {
       const likeButton = document.querySelector(
-        this.hideElements.LIKE_BUTTON
+        this.selectors.LIKE_BUTTON
       ) as HTMLElement;
       if (likeButton) {
         likeButton.style.display = this.settings.hideLikeButton
@@ -69,21 +72,35 @@ class TvingCustomizer {
       }
 
       this.debounceTimer = null;
-    }, 50);
+    }, 100);
+
+    if (this.settings.autoMuteOnAd) {
+      this.tryAutoMuteOnAd();
+    }
+  }
+
+  private tryAutoMuteOnAd() {
+    const adBtn = document.querySelector(this.selectors.AD_BUTTON);
+
+    if (!adBtn) {
+      const unmuteBtn = document.querySelector(
+        this.selectors.UNMUTE_BUTTON
+      ) as HTMLButtonElement | null;
+
+      if (unmuteBtn) unmuteBtn.click();
+      return;
+    }
+
+    const muteBtn = document.querySelector(
+      this.selectors.MUTE_BUTTON
+    ) as HTMLButtonElement | null;
+
+    if (muteBtn) muteBtn.click();
   }
 
   private observeDOMChanges() {
-    const observer = new MutationObserver((mutations) => {
-      const shouldUpdate = mutations.some((mutation) => {
-        const target = mutation.target as HTMLElement;
-        return Object.values(this.hideElements).some((selector) =>
-          target.matches(selector)
-        );
-      });
-
-      if (shouldUpdate) {
-        this.waitForElementsAndApply();
-      }
+    const observer = new MutationObserver(() => {
+      this.applySettings();
     });
 
     observer.observe(document.body, {

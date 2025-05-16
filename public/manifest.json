@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "TVING KBO PLUS",
-  "version": "0.0.1",
-  "description": "TVING KBO PLUS",
+  "name": "TVING KBO 도우미",
+  "version": "1.0.0",
+  "description": "TVING에서 KBO시청시 편리한 도구를 제공하는 확장프로그램입니다.",
   "action": {
     "default_popup": "index.html"
   },
@@ -14,8 +14,6 @@
     }
   ],
   "icons": {
-    "16": "tving.png",
-    "48": "tving.png",
-    "128": "tving.png"
+    "128": "image.png"
   }
 }

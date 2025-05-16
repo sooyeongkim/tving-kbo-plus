@@ -1,3 +1,4 @@
+import { addCinemaButton } from "./options/cinema-mode";
 import { hideLikeButton } from "./options/heart-button";
 import { addRecordButton } from "./options/record";
 import { addScreenshotButton } from "./options/screenshot";
@@ -9,6 +10,7 @@ class Content {
     autoMuteOnAd: false,
     addScreenshot: false,
     addRecord: false,
+    addCinemaMode: false,
   };
 
   constructor() {
@@ -35,6 +37,7 @@ class Content {
     hideLikeButton(this.settings.hideLikeButton);
     addScreenshotButton(this.settings.addScreenshot);
     addRecordButton(this.settings.addRecord);
+    addCinemaButton(this.settings.addCinemaMode);
   }
 }
 

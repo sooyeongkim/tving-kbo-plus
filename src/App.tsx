@@ -9,6 +9,7 @@ function App() {
     autoMuteOnAd: false,
     addScreenshot: false,
     addRecord: false,
+    addCinemaMode: false,
   });
 
   useEffect(() => {
@@ -50,17 +51,24 @@ function App() {
         />
       </S.SettingRow> */}
       <S.SettingRow>
-        <S.Label>스크린샷 활성화</S.Label>
+        <S.Label>스크린샷 버튼 활성화</S.Label>
         <S.ToggleButton
           isActive={settings.addScreenshot}
           onClick={() => handleToggle("addScreenshot")}
         />
       </S.SettingRow>
       <S.SettingRow>
-        <S.Label>녹화 활성화</S.Label>
+        <S.Label>녹화 버튼 활성화</S.Label>
         <S.ToggleButton
           isActive={settings.addRecord}
           onClick={() => handleToggle("addRecord")}
+        />
+      </S.SettingRow>
+      <S.SettingRow>
+        <S.Label>영화관 모드 버튼 활성화</S.Label>
+        <S.ToggleButton
+          isActive={settings.addCinemaMode}
+          onClick={() => handleToggle("addCinemaMode")}
         />
       </S.SettingRow>
     </S.Container>

@@ -16,16 +16,18 @@ export function injectBefore(node: React.ReactNode, target: HTMLElement): Root {
   return root;
 }
 
-export const waitForElement = async (
-  querySelector: string
-): Promise<Element> => {
-  return await new Promise((resolve) => {
-    const interval = setInterval(() => {
-      const element = document.querySelector(querySelector);
-      if (element !== null) {
-        clearInterval(interval);
-        resolve(element);
-      }
-    }, 100);
-  });
-};
+export async function waitForElement(
+  selector: string,
+  timeout: number = 5000
+): Promise<HTMLElement | null> {
+  const startTime = Date.now();
+  while (document.querySelector(selector) === null) {
+    // 타임아웃
+    if (Date.now() - startTime >= timeout) {
+      return null;
+    }
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+
+  return document.querySelector(selector) as HTMLElement;
+}

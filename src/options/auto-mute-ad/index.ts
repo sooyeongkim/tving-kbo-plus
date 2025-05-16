@@ -1,26 +1,22 @@
 import selectors from "../../constant/selectors";
+import { getVideoElement } from "../../utils/get";
 
 export async function autoMuteOnAd(enabled: boolean) {
   if (!enabled) return;
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach(() => {
+  const observer = new MutationObserver(async (mutations) => {
+    mutations.forEach(async () => {
+      const video = await getVideoElement();
+      if (!video) return;
+
       const adBtn = document.querySelector(selectors.AD_BUTTON);
 
       if (!adBtn) {
-        const unmuteBtn = document.querySelector(
-          selectors.UNMUTE_BUTTON
-        ) as HTMLButtonElement | null;
-
-        if (unmuteBtn) unmuteBtn.click();
+        video.muted = false;
         return;
       }
 
-      const muteBtn = document.querySelector(
-        selectors.MUTE_BUTTON
-      ) as HTMLButtonElement | null;
-
-      if (muteBtn) muteBtn.click();
+      video.muted = true;
     });
   });
 

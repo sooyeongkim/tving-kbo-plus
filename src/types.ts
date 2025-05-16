@@ -3,4 +3,5 @@ export interface Settings {
   autoMuteOnAd: boolean;
   addScreenshot: boolean;
   addRecord: boolean;
+  addCinemaMode: boolean;
 }

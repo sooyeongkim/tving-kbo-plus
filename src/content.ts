@@ -1,4 +1,5 @@
 import { hideLikeButton } from "./options/heart-button";
+import { addRecordButton } from "./options/record";
 import { addScreenshotButton } from "./options/screenshot";
 import { Settings } from "./types";
 
@@ -7,6 +8,7 @@ class Content {
     hideLikeButton: false,
     autoMuteOnAd: false,
     addScreenshot: false,
+    addRecord: false,
   };
 
   constructor() {
@@ -32,6 +34,7 @@ class Content {
     console.log("applySettings");
     hideLikeButton(this.settings.hideLikeButton);
     addScreenshotButton(this.settings.addScreenshot);
+    addRecordButton(this.settings.addRecord);
   }
 }
 

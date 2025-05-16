@@ -22,6 +22,12 @@ export const SettingRow = styled.div`
   border-radius: 8px;
 `;
 
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 export const Label = styled.label`
   flex: 1;
   color: #000000;
@@ -52,4 +58,16 @@ export const ToggleButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background-color: ${(props) => (props.isActive ? "#45a049" : "#bbbbbb")};
   }
+`;
+
+export const Notice = styled.p`
+  font-size: 12px;
+  color: #666666;
+`;
+
+export const Description = styled.p`
+  font-size: 14px;
+  color: #666666;
+  margin-top: 4px;
+  margin-bottom: 8px;
 `;

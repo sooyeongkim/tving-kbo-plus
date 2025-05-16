@@ -1,8 +1,8 @@
 import { screenshot } from "../../utils/screenshot";
 
 export const ScreenshotButton = () => {
-  const handleOnClick = () => {
-    screenshot();
+  const handleOnClick = async () => {
+    await screenshot();
   };
 
   return (

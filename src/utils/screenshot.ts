@@ -1,7 +1,7 @@
-export function screenshot(): void {
-  const video: HTMLVideoElement | null = document.querySelector(
-    '[id^="tving-player"]'
-  );
+import { getCurrentTime, getTitle, getVideoElement } from "./get";
+
+export async function screenshot(): Promise<void> {
+  const video = await getVideoElement();
   if (video === null) {
     return;
   }
@@ -22,11 +22,9 @@ export function screenshot(): void {
   const image = canvas.toDataURL("image/png");
 
   const link = document.createElement("a");
-  const title = document.querySelector(
-    "#__next > div > div > div > section > div > h1"
-  );
-  const date = new Date().toLocaleDateString("ko-KR").replace(/\./g, "").trim();
-  link.download = `${title?.innerHTML || "screenshot"}-${date}.png`;
+  const title = await getTitle();
+  const date = getCurrentTime();
+  link.download = `${title ? title : "screenshot"}-${date}.png`;
   link.href = image;
 
   document.body.appendChild(link);

@@ -7,6 +7,7 @@ function App() {
   const [settings, setSettings] = useState<Settings>({
     hideLikeButton: false,
     autoMuteOnAd: false,
+    addScreenshot: false,
   });
 
   useEffect(() => {
@@ -44,6 +45,13 @@ function App() {
         <S.ToggleButton
           isActive={settings.autoMuteOnAd}
           onClick={() => handleToggle("autoMuteOnAd")}
+        />
+      </S.SettingRow>
+      <S.SettingRow>
+        <S.Label>스크린샷 활성화</S.Label>
+        <S.ToggleButton
+          isActive={settings.addScreenshot}
+          onClick={() => handleToggle("addScreenshot")}
         />
       </S.SettingRow>
     </S.Container>

@@ -1,113 +1,38 @@
+import { hideLikeButton } from "./options/heart-button";
+import { addScreenshotButton } from "./options/screenshot";
 import { Settings } from "./types";
 
-class TvingCustomizer {
+class Content {
   private settings: Settings = {
     hideLikeButton: false,
     autoMuteOnAd: false,
+    addScreenshot: false,
   };
-
-  private readonly selectors = {
-    LIKE_BUTTON: ".group\\/heart",
-    AD_BUTTON: ".PcAdvertisementLinkButton_advertisementLinkButton__tyCiu",
-    MUTE_BUTTON: 'button[aria-label="음소거"]',
-    UNMUTE_BUTTON: 'button[aria-label="음소거 해제"]',
-  };
-
-  private debounceTimer: number | null = null;
-  private isInitialized = false;
 
   constructor() {
+    console.log("initialize");
     this.initialize();
   }
 
   private async initialize() {
-    const result = await chrome.storage.sync.get("tvingSettings");
-    if (result.tvingSettings) {
-      this.settings = result.tvingSettings;
-    }
+    chrome.storage.sync
+      .get("tvingSettings")
+      .then((settings) => {
+        if (!settings) {
+          console.error("error-no-settings");
+        }
 
-    chrome.storage.onChanged.addListener((changes) => {
-      if (changes.tvingSettings) {
-        this.settings = changes.tvingSettings.newValue;
+        this.settings = settings.tvingSettings;
         this.applySettings();
-      }
-    });
-
-    this.waitForElementsAndApply();
-  }
-
-  private waitForElementsAndApply() {
-    if (this.isInitialized) return;
-
-    const checkElements = () => {
-      const elements = Object.values(this.selectors).map((selector) =>
-        document.querySelector(selector)
-      );
-
-      if (elements.some((element) => element)) {
-        this.isInitialized = true;
-        this.applySettings();
-        this.observeDOMChanges();
-      } else {
-        requestAnimationFrame(checkElements);
-      }
-    };
-
-    requestAnimationFrame(checkElements);
+      })
+      .catch((e) => console.log(e));
   }
 
   private applySettings() {
-    if (this.debounceTimer) {
-      window.clearTimeout(this.debounceTimer);
-    }
-
-    this.debounceTimer = window.setTimeout(() => {
-      const likeButton = document.querySelector(
-        this.selectors.LIKE_BUTTON
-      ) as HTMLElement;
-      if (likeButton) {
-        likeButton.style.display = this.settings.hideLikeButton
-          ? "none"
-          : "block";
-      }
-
-      this.debounceTimer = null;
-    }, 100);
-
-    if (this.settings.autoMuteOnAd) {
-      this.tryAutoMuteOnAd();
-    }
-  }
-
-  private tryAutoMuteOnAd() {
-    const adBtn = document.querySelector(this.selectors.AD_BUTTON);
-
-    if (!adBtn) {
-      const unmuteBtn = document.querySelector(
-        this.selectors.UNMUTE_BUTTON
-      ) as HTMLButtonElement | null;
-
-      if (unmuteBtn) unmuteBtn.click();
-      return;
-    }
-
-    const muteBtn = document.querySelector(
-      this.selectors.MUTE_BUTTON
-    ) as HTMLButtonElement | null;
-
-    if (muteBtn) muteBtn.click();
-  }
-
-  private observeDOMChanges() {
-    const observer = new MutationObserver(() => {
-      this.applySettings();
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    console.log("applySettings");
+    hideLikeButton(this.settings.hideLikeButton);
+    addScreenshotButton(this.settings.addScreenshot);
   }
 }
 
-new TvingCustomizer();
+new Content();

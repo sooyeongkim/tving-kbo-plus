@@ -1,26 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { resolve } from "path";
+import { crx } from "@crxjs/vite-plugin";
+import manifest from "./public/manifest.json";
 
 export default defineConfig({
-  plugins: [react()],
-  build: {
-    outDir: "dist",
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, "index.html"),
-        content: resolve(__dirname, "src/content.ts"),
-      },
-      output: {
-        entryFileNames: "[name].js",
-        chunkFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
-      },
-    },
-  },
-  server: {
-    watch: {
-      usePolling: true,
-    },
-  },
+  plugins: [react(), crx({ manifest })],
 });

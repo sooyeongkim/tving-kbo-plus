@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.tving.com/contents/sports/*"],
-      "js": ["content.js"]
+      "js": ["src/content.ts"]
     }
   ],
   "icons": {

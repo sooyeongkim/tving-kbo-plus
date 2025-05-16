@@ -13,6 +13,7 @@
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@types/chrome": "^0.0.260",
     "@types/node": "^22.15.17",
     "@types/react": "^18.2.55",

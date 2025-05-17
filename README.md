@@ -9,6 +9,12 @@ Tving에서 편한 KBO 시청을 위한 익스텐션입니다.
 
 [크롬 웹스토어](https://chromewebstore.google.com/detail/dfenbbadoioppjballdeinhmbbedphkj?utm_source=item-share-cb)
 
+## 기능
+- 채팅창 하트 버튼 숨기기
+- 스크린샷 버튼 추가
+- 녹화 버튼 추가
+- 영화관(넓은화면) 모드
+
 ## 기술 스택
 
 - Vite

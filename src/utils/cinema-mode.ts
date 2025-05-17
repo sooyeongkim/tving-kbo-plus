@@ -1,14 +1,7 @@
 import selectors from "../constant/selectors";
 import { waitForElement } from "./dom";
 
-const removedStyles = [
-  "!w-[var(--live-player-width)]",
-  "!h-[var(--live-player-height)]",
-  "top-[6rem]",
-  "z-20",
-];
-
-const addedStyles = ["w-screen", "h-screen", "z-[999]"];
+let originalClassName = "";
 
 export async function toggleCinemaMode(isWideMode: boolean) {
   const container = await waitForElement(selectors.PLAYER_CONTAINER);
@@ -20,14 +13,14 @@ export async function toggleCinemaMode(isWideMode: boolean) {
   }
 
   if (isWideMode) {
-    container.classList.remove(...removedStyles);
-    container.classList.add(...addedStyles);
+    originalClassName = container.className;
+    container.className =
+      "player-container fixed top-0 left-0 w-screen h-screen z-[999]";
     wrap.style.height = "100%";
     wrap.style.maxHeight = "none";
     document.body.style.overflow = "hidden";
   } else {
-    container.classList.remove(...addedStyles);
-    container.classList.add(...removedStyles);
+    container.className = originalClassName;
     wrap.style.height = "";
     wrap.style.maxHeight = "";
     document.body.style.overflow = "";

@@ -27,9 +27,16 @@ export async function record(): Promise<boolean> {
     console.error("2d 컨텍스트를 가져오는데 실패했습니다.");
     return isRecording;
   }
+  const videoStream = canvas.captureStream();
+  const audioStream = (video as any).captureStream().getAudioTracks();
+  const combinedStream = new MediaStream([
+    ...videoStream.getTracks(),
+    ...audioStream,
+  ]);
 
-  const mediaStream = canvas.captureStream();
-  mediaRecorder = new MediaRecorder(mediaStream, { mimeType: "video/mp4" });
+  mediaRecorder = new MediaRecorder(combinedStream, {
+    mimeType: "video/mp4; codecs=avc1.42E01E,mp4a.40.2",
+  });
   chunks = [];
 
   mediaRecorder.ondataavailable = (e) => {

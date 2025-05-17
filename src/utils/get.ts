@@ -8,9 +8,7 @@ export async function getVideoElement(): Promise<HTMLVideoElement | null> {
 }
 
 export async function getTitle(): Promise<string | null> {
-  const title = await waitForElement(
-    "#__next > div > div > div > section > div > h1"
-  );
+  const title = await waitForElement("head > title");
   return title ? title.innerHTML : null;
 }
 
@@ -21,5 +19,5 @@ export function getCurrentTime(): string {
   const date = String(now.getDate()).padStart(2, "0");
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
-  return `${year}-${month}-${date} ${hours}:${minutes}`;
+  return `${year}${month}${date}${hours}${minutes}`;
 }

@@ -1,10 +1,13 @@
 # Tving KBO Plus
-![promo (1)](https://github.com/user-attachments/assets/87bd681e-448b-400a-ae0a-34b07742e636)
+
+![promo1](https://github.com/user-attachments/assets/ac61213a-53cb-450d-9ba1-8e90d0d4cf4e)
 
 <img width="344" alt="image" src="https://github.com/user-attachments/assets/92518c38-d1d0-454b-8ebc-590d1e92535e" />
 
 
 Tving에서 편한 KBO 시청을 위한 익스텐션입니다.
+
+[크롬 웹스토어](https://chromewebstore.google.com/detail/dfenbbadoioppjballdeinhmbbedphkj?utm_source=item-share-cb)
 
 ## 기술 스택
 

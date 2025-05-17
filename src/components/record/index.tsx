@@ -1,4 +1,4 @@
-import { useRecord } from "../../hooks/useRecord";
+import { useRecord } from "../../hooks/use-record";
 
 export const RecordButton = () => {
   const { isRecording, handleRecord } = useRecord();

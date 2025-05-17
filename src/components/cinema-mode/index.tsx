@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { toggleCinemaMode } from "../../utils/cinema-mode";
+import { isFullScreen } from "../../utils/is";
+import { useEventListener } from "../../hooks/use-event-listener";
+
 export const CinemaModeButton = () => {
   const [isWideMode, setIsWideMode] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEventListener(document, "fullscreenchange", () => {
+    setIsFullscreen(isFullScreen());
+  });
 
   const handleOnClick = () => {
     setIsWideMode((prev) => {
@@ -9,6 +17,10 @@ export const CinemaModeButton = () => {
       return !prev;
     });
   };
+
+  if (isFullscreen) {
+    return null;
+  }
 
   return (
     <button

@@ -6,8 +6,9 @@ let originalClassName = "";
 export async function toggleCinemaMode(isWideMode: boolean) {
   const container = await waitForElement(selectors.PLAYER_CONTAINER);
   const wrap = await waitForElement(selectors.PLAYER_WRAP);
+  const fullScreenButton = await waitForElement(selectors.FULLSCREEN_BUTTON);
 
-  if (!container || !wrap) {
+  if (!container || !wrap || !fullScreenButton) {
     console.warn("필요한 요소를 찾을 수 없습니다");
     return;
   }
@@ -19,10 +20,12 @@ export async function toggleCinemaMode(isWideMode: boolean) {
     wrap.style.height = "100%";
     wrap.style.maxHeight = "none";
     document.body.style.overflow = "hidden";
+    fullScreenButton.style.display = "none";
   } else {
     container.className = originalClassName;
     wrap.style.height = "";
     wrap.style.maxHeight = "";
     document.body.style.overflow = "";
+    fullScreenButton.style.display = "block";
   }
 }

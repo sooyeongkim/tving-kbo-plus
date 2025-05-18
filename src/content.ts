@@ -1,3 +1,4 @@
+import selectors from "./constant/selectors";
 import { addCinemaButton } from "./options/cinema-mode";
 import { hideLikeButton } from "./options/heart-button";
 import { addRecordButton } from "./options/record";
@@ -19,21 +20,36 @@ class Content {
   }
 
   private async initialize() {
-    chrome.storage.sync
-      .get("tvingSettings")
-      .then((settings) => {
-        if (!settings) {
-          console.error("error-no-settings");
-        }
+    try {
+      const settings = await chrome.storage.sync.get("tvingSettings");
+      if (!settings || !settings.tvingSettings) {
+        console.error("error-no-settings");
+        return;
+      }
 
-        this.settings = settings.tvingSettings;
+      this.settings = settings.tvingSettings;
+      this.waitForVideoElement();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  private waitForVideoElement() {
+    const observer = new MutationObserver((_mutations, obs) => {
+      const videoElement = document.querySelector(selectors.PLAYER_CONTAINER);
+      if (videoElement) {
+        obs.disconnect();
         this.applySettings();
-      })
-      .catch((e) => console.log(e));
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
   }
 
   private applySettings() {
-    console.log("applySettings");
     hideLikeButton(this.settings.hideLikeButton);
     addScreenshotButton(this.settings.addScreenshot);
     addRecordButton(this.settings.addRecord);
